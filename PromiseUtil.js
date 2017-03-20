@@ -1,11 +1,11 @@
 class PromiseUtil
 {
-	runSequential( array ,generator )
+	static runSequential( array ,generator )
 	{
 		return promiseMax( array ,generator ,1 );
 	}
 
-	runAtMax( array, generator, max )
+	static runAtMax( array, generator, max )
 	{
 		var results = new Array( array.length );
 		var taskers	= new Array( max );

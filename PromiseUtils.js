@@ -1,24 +1,24 @@
 class PromiseUtil
 {
 	static resolveAfter( value, milliseconds )
-    {   
+    {
         return new Promise((resolve, reject)=>
-        {   
+        {
             setTimeout(()=>{ resolve( value ); }, milliseconds );
-        }); 
-    }   
+        });
+    }
 
     static rejectAfter( value, milliseconds )
-    {   
+    {
         return new Promise((resolve, reject)=>
         {
             setTimeout(()=>{ reject( value ); }, milliseconds );
-        }); 
-    }   
+        });
+    }
 
 	static runSequential( array ,generator )
 	{
-		return promiseMax( array ,generator ,1 );
+		return PromiseUtil.runAtMax( array ,generator ,1 );
 	}
 
 	static runAtMax( array, generator, max )

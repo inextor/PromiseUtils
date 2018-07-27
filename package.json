@@ -1,6 +1,6 @@
 {
-  "name": "promise-utils",
-  "version": "1.0.0",
+  "name": "promiseutil",
+  "version": "1.0.7",
   "description": "",
   "main": "PromiseUtils.js",
   "scripts": {

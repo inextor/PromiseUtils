@@ -23,6 +23,9 @@ class PromiseUtil
 
 	static runAtMax( array, generator, max )
 	{
+		if( array.length == 0 )
+			return Promise.resolve( [] );
+
 		var results = new Array( array.length );
 		var taskers	= new Array( max );
 

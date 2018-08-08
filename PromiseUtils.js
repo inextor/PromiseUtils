@@ -1,4 +1,4 @@
-class PromiseUtil
+class PromiseUtils
 {
 	static resolveAfter( value, milliseconds )
     {
@@ -18,7 +18,7 @@ class PromiseUtil
 
 	static runSequential( array ,generator )
 	{
-		return PromiseUtil.runAtMax( array ,generator ,1 );
+		return PromiseUtils.runAtMax( array ,generator ,1 );
 	}
 
 	static runAtMax( array, generator, max )

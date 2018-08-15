@@ -102,4 +102,56 @@ class PromiseUtils
 			);
 		});
 	}
+
+	/*
+		let i =5;
+		let fun = ()=>{
+			console.log('Hello');
+			i--;
+			return i == 0;
+		};
+
+		PromiseUtils.tryNTimes( fun, 1000, 10 );
+
+		let fun = ()=>{
+			console.log('Hello');
+			return false;
+		};
+
+		PromiseUtils.tryNTimes( fun, 1000, 10 ).catch((m)=>console.log( m) );
+	*/
+	static tryNTimes(fun,delayBetweenRunsInMillis, times )
+	{
+		let theRun = ( prevResult )=>{
+
+			if( prevResult !== false )
+				return  Promise.resolve( prevResult );
+
+			let result = fun();
+
+			if( result !==  false )
+				return Promise.resolve( result );
+
+			return PromiseUtils.resolveAfter(false, delayBetweenRunsInMillis );
+		};
+
+		let array = [];
+		for(let i=0;i<times;i++)
+		{
+			array.push( 1 );
+		}
+
+		let p = array.reduce((p,c)=>{
+			return p.then((r)=>{ return theRun( r ); });
+		},Promise.resolve(false));
+
+		return p.then((result)=>
+		{
+			if( result === false )
+				return Promise.reject('It fails');
+
+			return Promise.resolve( result );
+		});
+	}
 }
+

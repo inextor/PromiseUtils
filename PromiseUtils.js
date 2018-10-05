@@ -1,3 +1,6 @@
+var Promise = require('promise');
+//var Promise = require('promised-io/promise');
+
 class PromiseUtils
 {
 	static resolveAfter( value, milliseconds )
@@ -104,7 +107,7 @@ class PromiseUtils
 	}
 
 	/*
-		let i =5;
+	let i =5;
 		let fun = ()=>{
 			console.log('Hello');
 			i--;
@@ -113,44 +116,30 @@ class PromiseUtils
 
 		PromiseUtils.tryNTimes( fun, 1000, 10 );
 
-		let fun = ()=>{
-			console.log('Hello');
-			return false;
-		};
+		//fun = ()=>{
+		//	console.log('Hello');
+		//	return false;
+		//};
 
 		PromiseUtils.tryNTimes( fun, 1000, 10 ).catch((m)=>console.log( m) );
-	*/
-	static tryNTimes(fun,delayBetweenRunsInMillis, times )
+
+	//*/
+
+	static tryNTimes( fun, delayBetweenRunsInMillis, times )
 	{
-		let theRun = ( prevResult )=>{
+		let result = fun();
 
-			if( prevResult !== false )
-				return  Promise.resolve( prevResult );
+		if( result !== false )
+			return Promise.resolve( result );
 
-			let result = fun();
-
-			if( result !==  false )
-				return Promise.resolve( result );
-
-			return PromiseUtils.resolveAfter(false, delayBetweenRunsInMillis );
-		};
-
-		let array = [];
-		for(let i=0;i<times;i++)
+		if( times === 0 )
 		{
-			array.push( 1 );
+			return Promise.reject(  result );
 		}
 
-		let p = array.reduce((p,c)=>{
-			return p.then((r)=>{ return theRun( r ); });
-		},Promise.resolve(false));
-
-		return p.then((result)=>
+		return this.resolveAfter( false, delayBetweenRunsInMillis, 1).then(()=>
 		{
-			if( result === false )
-				return Promise.reject('It fails');
-
-			return Promise.resolve( result );
+			return this.tryNTimes( fun, delayBetweenRunsInMillis, times-1 );
 		});
 	}
 }

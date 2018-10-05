@@ -1,4 +1,3 @@
-var Promise = require('promise');
 //var Promise = require('promised-io/promise');
 
 class PromiseUtils

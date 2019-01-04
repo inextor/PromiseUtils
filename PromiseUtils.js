@@ -1,6 +1,6 @@
 //var Promise = require('promised-io/promise');
 
-class PromiseUtils
+export default class PromiseUtils
 {
 	static resolveAfter( value, milliseconds )
     {

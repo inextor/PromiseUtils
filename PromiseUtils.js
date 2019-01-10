@@ -1,5 +1,3 @@
-//var Promise = require('promised-io/promise');
-
 export default class PromiseUtils
 {
 	static resolveAfter( value, milliseconds )
@@ -20,7 +18,21 @@ export default class PromiseUtils
 
 	static runSequential( array ,generator )
 	{
-		return PromiseUtils.runAtMax( array ,generator ,1 );
+		if( array.length == 0 )
+			return Promise.resolve([]);
+
+		let values = [];
+		return array.reduce((acum,item, index)=>{
+			return acum.then((z)=>{
+				if( index > 0 )
+					values.push( z );
+
+				return  generator( item ,index );
+			});
+		},Promise.resolve()).then((r)=>{
+				values.push( r );
+				return Promise.resolve( values );
+		});
 	}
 
 	static runAtMax( array, generator, max )

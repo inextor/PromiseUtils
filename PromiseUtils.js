@@ -95,26 +95,19 @@ export default class PromiseUtils
 			promises.push( object[ i ] );
 		}
 
-		return new Promise((resolve,reject)=>
-		{
-			Promise.all( promises ).then
-			(
-			 	(values)=>
+		return Promise.all( promises ).then
+		(
+		 	(values)=>
+			{
+				var obj = {};
+				for(var i=0;i<values.length;i++)
 				{
-					var obj = {};
-					for(var i=0;i<values.length;i++)
-					{
-						obj[ index[ i ] ] = values [ i ];
-					}
-
-					resolve( obj );
-				},
-				(reason)=>
-				{
-					reject( reason );
+					obj[ index[ i ] ] = values [ i ];
 				}
-			);
-		});
+
+				return obj;
+			}
+		);
 	}
 
 	/*

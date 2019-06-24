@@ -4,7 +4,10 @@ export default class PromiseUtils
     {
         return new Promise((resolve, reject)=>
         {
-            setTimeout(()=>{ resolve( value ); }, milliseconds );
+            setTimeout(()=>
+			{
+				resolve( value );
+			}, milliseconds );
         });
     }
 
